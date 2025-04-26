@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://techprohosting.com/sitemap.xml
+
+Disallow: /admin/
+Disallow: /private/
+Disallow: /checkout/
