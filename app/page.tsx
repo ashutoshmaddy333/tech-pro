@@ -1,5 +1,6 @@
-import App from "../src/App"
+// This is a Server Component
+import ClientWrapper from "../src/components/ClientWrapper"
 
 export default function Page() {
-  return <App />
+  return <ClientWrapper />
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom"
 import Header from "./components/Header"
 import Navbar from "./components/Navbar"
@@ -16,7 +16,10 @@ import PrivacyPolicy from "./conditions/PrivacyPolicy"
 import RefundPolicy from "./conditions/TechProHostingPolicies"
 import TermsAndConditions from "./conditions/TermsAndConditions"
 import WordPressFeatures from "./components/WordPressFeatures"
-import AIChat from "./AIChat/AIChat"
+import dynamic from "next/dynamic"
+
+// Dynamically import AIChat with no SSR
+const AIChat = dynamic(() => import("./AIChat/AIChat"), { ssr: false })
 
 // Scroll to top component
 const ScrollToTop = () => {
@@ -72,6 +75,16 @@ function HomePage() {
 }
 
 function App() {
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
+  if (!isMounted) {
+    return null // Return null on server-side
+  }
+
   return (
     <Router>
       <ScrollToTop />

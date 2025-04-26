@@ -10,7 +10,7 @@ const TawkTo = () => {
     setIsMounted(true)
   }, [])
 
-  if (!isMounted) {
+  if (!isMounted || typeof window === "undefined") {
     return null
   }
 

@@ -7,37 +7,37 @@ const TawkToChat = () => {
 
   useEffect(() => {
     setIsMounted(true)
-  }, [])
 
-  useEffect(() => {
-    if (!isMounted) return
+    if (typeof window !== "undefined") {
+      // Initialize Tawk.to script
+      const Tawk_API = window.Tawk_API || {}
+      const Tawk_LoadStart = new Date()
 
-    // Initialize Tawk.to script
-    // eslint-disable-next-line no-unused-vars
-    const Tawk_API = window.Tawk_API || {}
-    const Tawk_LoadStart = new Date()
+      // Create and inject the script
+      const s1 = document.createElement("script")
+      const s0 = document.getElementsByTagName("script")[0]
 
-    // Create and inject the script
-    const s1 = document.createElement("script")
-    const s0 = document.getElementsByTagName("script")[0]
+      s1.async = true
+      s1.src = "https://embed.tawk.to/65212e0eeb150b3fb99f010a/1hc4pnqoe"
+      s1.charset = "UTF-8"
+      s1.setAttribute("crossorigin", "*")
 
-    s1.async = true
-    s1.src = "https://embed.tawk.to/65212e0eeb150b3fb99f010a/1hc4pnqoe"
-    s1.charset = "UTF-8"
-    s1.setAttribute("crossorigin", "*")
-
-    // Insert the script before the first script tag in the document
-    if (s0 && s0.parentNode) {
-      s0.parentNode.insertBefore(s1, s0)
-    } else {
-      document.head.appendChild(s1)
+      // Insert the script before the first script tag in the document
+      if (s0 && s0.parentNode) {
+        s0.parentNode.insertBefore(s1, s0)
+      } else {
+        document.head.appendChild(s1)
+      }
     }
 
     // Cleanup function
     return () => {
-      // Clean up the script when component unmounts
-      if (s1 && s1.parentNode) {
-        s1.parentNode.removeChild(s1)
+      if (typeof window !== "undefined") {
+        // Clean up the script when component unmounts
+        const script = document.querySelector('script[src="https://embed.tawk.to/65212e0eeb150b3fb99f010a/1hc4pnqoe"]')
+        if (script && script.parentNode) {
+          script.parentNode.removeChild(script)
+        }
       }
     }
   }, [isMounted])
